@@ -20,15 +20,6 @@ export default {
     }
   },
 }
-/*
-      <nuxt-link :to="'./wallpaper/'+wallpaper.name" >{{ wallpaper.name }}</nuxt-link>
-
-      <ul>
-        <li> <a :href="'/wallpapers/'+wallpaper.name+'/'+wallpaper.name+'_2560x1440.png'">2560x1440</a> </li>
-        <li> <a :href="'/wallpapers/'+wallpaper.name+'/'+wallpaper.name+'_1920x1080.png'">1920x1080</a> </li>
-        <li> <a :href="'/wallpapers/'+wallpaper.name+'/'+wallpaper.name+'_890x1590.png'">890x1590</a> </li>
-      </ul>
-*/
 </script>
 
 <style scoped lang="scss">
@@ -45,19 +36,4 @@ export default {
     margin: 5px;
   }
 }
-/*
-ul {
-  list-style: none;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  li {
-    margin: 3px;
-    text-align: center;
-  }
-}
-*/
 </style>

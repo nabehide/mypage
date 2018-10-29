@@ -6,14 +6,12 @@ export const state = () => ({
     isGlitched: false,
     glitch: 127,
   },
-  /*
-  stop: {
-    isStoped: false,
-  },
   zoom: {
     zoom: 1.0,
   },
-  */
+  time: {
+    isStoped: false,
+  },
 })
 
 export const mutations = {

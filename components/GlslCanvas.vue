@@ -50,11 +50,16 @@ export default {
       resolution: {type: 'v2', value: new THREE.Vector2(width, height)},
     }
     uniforms = Object.assign(DEFAULT_UNIFORMS, uniforms)
+
     uniforms = Object.assign({
       isColorInverted: {type: 'i', value: this.parameters.invertColor.isColorInverted},
 
       isGlitched: {type: 'i', value: this.parameters.glitch.isGlitched},
       glitch: {type: 'i', value: this.parameters.glitch.glitch},
+
+      zoom: {type: 'f', value: this.parameters.zoom.zoom},
+
+      isStoped: {type: 'i', value: this.parameters.time.isStoped},
 
     }, uniforms)
 
@@ -105,17 +110,19 @@ export default {
     animate () {
       requestAnimationFrame(this.animate)
 
-      const now = this.getTime()
-      if (this.fps < now - this.past) {
-        this.past = now
-
+      this.now = this.getTime()
+      if (this.fps < this.now - this.past) {
         this.updateUniforms()
+
+        this.past = this.now
 
         this.renderer.render(this.scene, this.camera)
       }
     },
     updateUniforms () {
-      this.uniforms.time.value = (this.getTime() % (1000*60*60)) * 0.001;
+      if(!this.parameters.time.isStoped) {
+        this.uniforms.time.value += (this.now - this.past)*0.001;
+      }
 
       for (let p in this.parameters) {
         for (let name in this.parameters[p]) {

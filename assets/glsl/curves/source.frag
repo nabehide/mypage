@@ -17,6 +17,7 @@ uniform int   d3;
 uniform int   isColorInverted;
 uniform int   isGlitched;
 uniform float glitch;
+uniform float zoom;
 
 const float PI = 3.14159265;
 const float period = 5.;
@@ -63,6 +64,9 @@ void main(void){
   vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
 
   float t = mod(time, period);
+
+  // zoom
+  p *= zoom;
 
   // glich
   // if(d2 == 1){

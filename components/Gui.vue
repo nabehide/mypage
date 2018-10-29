@@ -21,7 +21,6 @@ export default {
 
     this.params = this.$store.getters["parameters/state"]
     this.parameters = JSON.parse(JSON.stringify(this.params))
-    console.log(this.parameters)
 
     /*
     this.params = this.$store.getters["parameters/state"]

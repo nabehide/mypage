@@ -19,6 +19,7 @@
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "dat.gui": "^0.7.3",
     "node-sass": "^4.9.4",
+    "normalize.css": "^8.0.0",
     "nuxt": "^2.2.0",
     "sass-loader": "^7.1.0"
   },

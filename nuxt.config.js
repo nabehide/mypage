@@ -28,8 +28,5 @@ module.exports = {
       })
     },
   },
-  router: {
-    linkActiveClass: 'selected',
-  },
   ...routerBase,
 }

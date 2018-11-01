@@ -13,6 +13,7 @@ module.exports = {
   },
   css: [
     'normalize.css',
+    '~/assets/css/main.css',
     '@fortawesome/fontawesome-free-webfonts',
     '@fortawesome/fontawesome-free-webfonts/css/fa-brands.css',
     '@fortawesome/fontawesome-free-webfonts/css/fa-regular.css',

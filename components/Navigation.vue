@@ -19,8 +19,6 @@ nav {
     list-style: none;
     margin: 5px 0px;
 
-    border-bottom: white solid thin;
-
     .selected {
       border-bottom: black solid thin;
     }

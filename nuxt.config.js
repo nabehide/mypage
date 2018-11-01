@@ -5,6 +5,9 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
 } : {}
 
 module.exports = {
+  plugins: [
+    { src: '~plugins/ga.js', ssr: false },
+  ],
   env: {
     wallpapers: [
       { name: "arabesque" },

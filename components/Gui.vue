@@ -7,15 +7,14 @@
 <script>
 export default {
   data () {
-    const dat = require("dat.gui")
-    const gui = new dat.GUI({})
-    gui.open()
-
     return {
-      gui: gui,
     }
   },
   mounted () {
+    const dat = require("dat.gui")
+    this.gui = new dat.GUI({})
+    this.gui.open()
+
     const guiContainer = document.getElementById("guiContainer")
     guiContainer.appendChild(this.gui.domElement)
 
@@ -39,7 +38,6 @@ export default {
       const folder = this.gui.addFolder(effect)
       folder.open()
       for(let name in this.params[effect]){
-        // this.gui.add(this.parameters[effect], name).listen().onChange(() => {
         folder.add(this.parameters[effect], name).listen().onChange(() => {
           this.setParameter(effect, name)
         })
@@ -57,6 +55,7 @@ export default {
           name = 'isColorInverted'
           this.keyEvent(effect, name, !this.parameters[effect][name])
           break
+
         case 's':
           effect = 'glitch'
           name = 'isGlitched'
@@ -72,6 +71,24 @@ export default {
           name = 'glitch'
           this.keyEvent(effect, name, this.parameters[effect][name]-1)
           break
+
+        case 'e':
+          effect = 'zoom'
+          name = 'zoom'
+          this.keyEvent(effect, name, this.parameters[effect][name]+1)
+          break
+        case 'c':
+          effect = 'zoom'
+          name = 'zoom'
+          this.keyEvent(effect, name, this.parameters[effect][name]-1)
+          break
+
+        case 'f':
+          effect = 'time'
+          name = 'isStopped'
+          this.keyEvent(effect, name, !this.parameters[effect][name])
+          break
+
         default:
           console.log(e.key)
           break

@@ -32,26 +32,41 @@ export default {
   computed: {
   },
   data () {
-    this.parameters = this.$store.getters["parameters/state"]
-    // this.parameters = this.$store.getters["parameters/parameters"]
+    const parameters = this.$store.getters["parameters/state"]
     const scene  = new THREE.Scene()
 
-    const width = window.innerWidth
-    const height = window.innerHeight
-    const aspect = width / height
+    return {
+      scene: scene,
+      parameters: parameters,
+      /*
+      camera: camera,
+      plane: plane,
+      uniforms: uniforms,
+      width: width,
+      height: height,
+      aspect: aspect,
+      */
+    }
+  },
+  created () {
+  },
+  mounted () {
+    this.width = window.innerWidth
+    this.height = window.innerHeight
+    this.aspect = this.width / this.height
 
-    const camera = new THREE.OrthographicCamera(-aspect, aspect, 1, -1, 0.1, 10)
-    camera.position.set(0, 0, 1)
-    camera.lookAt(scene.position)
+    this.camera = new THREE.OrthographicCamera(-this.aspect, this.aspect, 1, -1, 0.1, 10)
+    this.camera.position.set(0, 0, 1)
+    this.camera.lookAt(this.scene.position)
 
-    let uniforms = {}
+    this.uniforms = {}
     const DEFAULT_UNIFORMS = {
       time: {type: 'f', value: 0.0},
-      resolution: {type: 'v2', value: new THREE.Vector2(width, height)},
+      resolution: {type: 'v2', value: new THREE.Vector2(this.width, this.height)},
     }
-    uniforms = Object.assign(DEFAULT_UNIFORMS, uniforms)
+    this.uniforms = Object.assign(DEFAULT_UNIFORMS, this.uniforms)
 
-    uniforms = Object.assign({
+    this.uniforms = Object.assign({
       isColorInverted: {type: 'i', value: this.parameters.invertColor.isColorInverted},
 
       isGlitched: {type: 'i', value: this.parameters.glitch.isGlitched},
@@ -59,32 +74,20 @@ export default {
 
       zoom: {type: 'f', value: this.parameters.zoom.zoom},
 
-      isStoped: {type: 'i', value: this.parameters.time.isStoped},
+      isStopped: {type: 'i', value: this.parameters.time.isStopped},
 
-    }, uniforms)
+    }, this.uniforms)
 
     const fragmentShader = require('@/assets/glsl/' + 'curves' + '/source.frag')
 
     const material = new THREE.ShaderMaterial({
       vertexShader: DEFAULT_VERTEX_SHADER,
       fragmentShader: fragmentShader || DEFAULT_FRAGMENT_SHADER,
-      uniforms: uniforms,
+      uniforms: this.uniforms,
     })
-    const geometry = new THREE.PlaneGeometry(2 * aspect, 2)
-    const plane = new THREE.Mesh(geometry, material)
-    return {
-      scene: scene,
-      camera: camera,
-      plane: plane,
-      uniforms: uniforms,
-      width: width,
-      height: height,
-      aspect: aspect,
-    }
-  },
-  created () {
-  },
-  mounted () {
+    const geometry = new THREE.PlaneGeometry(2 * this.aspect, 2)
+    this.plane = new THREE.Mesh(geometry, material)
+
     const kel = new KeyEventListener(this.$store)
     // kel.setup()
 
@@ -120,7 +123,7 @@ export default {
       }
     },
     updateUniforms () {
-      if(!this.parameters.time.isStoped) {
+      if(!this.parameters.time.isStopped) {
         this.uniforms.time.value += (this.now - this.past)*0.001;
       }
 
@@ -134,6 +137,7 @@ export default {
     getTime () {
       const now = window.performance && ( performance.now )
       return (now && now.call( performance )) && ( new Date().getTime() )
+      // return new Date().getTime()
     },
   },
   updated () {
@@ -142,6 +146,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container {
+}
+canvas {
+}
+/*
 .container {
   position: relative;
   width: 100%;
@@ -153,4 +162,5 @@ canvas {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+*/
 </style>

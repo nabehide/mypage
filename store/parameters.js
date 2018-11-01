@@ -10,7 +10,7 @@ export const state = () => ({
     zoom: 1.0,
   },
   time: {
-    isStoped: false,
+    isStopped: false,
   },
 })
 

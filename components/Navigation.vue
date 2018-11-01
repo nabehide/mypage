@@ -4,7 +4,6 @@
       <nuxt-link exact to="/" ><li>Top</li></nuxt-link>
       <nuxt-link to="/wallpaper" ><li>Wallpaper</li></nuxt-link>
       <nuxt-link to="/demo" ><li>Demo</li></nuxt-link>
-      <nuxt-link to="/test" ><li>Test</li></nuxt-link>
     </ul>
   </nav>
 </template>

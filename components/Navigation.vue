@@ -4,6 +4,7 @@
       <nuxt-link exact to="/" ><li>Top</li></nuxt-link>
       <nuxt-link to="/wallpaper" ><li>Wallpaper</li></nuxt-link>
       <nuxt-link to="/demo" ><li>Demo</li></nuxt-link>
+      <nuxt-link to="/test" ><li>Test</li></nuxt-link>
     </ul>
   </nav>
 </template>
@@ -19,7 +20,7 @@ nav {
     list-style: none;
     margin: 5px 0px;
 
-    .selected {
+    .nuxt-link-exact-active {
       border-bottom: black solid thin;
     }
 

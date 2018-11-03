@@ -27,6 +27,7 @@ module.exports = {
     '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css',
   ],
   build: {
+    // analyze: true,
     extend(config, { isDev, isClient }) {
       config.module.rules.push({
         test: /\.(glsl|frag|vert)$/,
@@ -36,4 +37,9 @@ module.exports = {
     },
   },
   ...routerBase,
+  head: {
+    meta: [
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    ],
+  },
 }

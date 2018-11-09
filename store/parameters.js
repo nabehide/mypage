@@ -18,10 +18,10 @@ export const state = () => ({
     },
     glitch: {
       tyle: Number,
-      glitch: 127,
-      max: 255,
+      glitch: 5.0,
+      max: 30,
       min: 0,
-      step: 1,
+      step: 0.1,
     },
   },
   zoom: {
@@ -29,8 +29,8 @@ export const state = () => ({
       tyle: Number,
       zoom: 1.0,
       max: 8.0,
-      min: 0.5,
-      step: 0.5,
+      min: 0.1,
+      step: 0.01,
     },
   },
   time: {
@@ -43,10 +43,10 @@ export const state = () => ({
     },
     speed: {
       tyle: Number,
-      speed: 1,
-      max: 10,
-      min: 0,
-      step: 0.5,
+      speed: 0.05,
+      max: 2,
+      min: 0.01,
+      step: 0.01,
     },
   },
 })

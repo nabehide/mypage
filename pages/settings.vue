@@ -1,17 +1,14 @@
 <template>
   <div>
-    <GlslCanvas/>
     <Gui/>
   </div>
 </template>
 
 <script>
-import GlslCanvas from '~/components/GlslCanvas'
 import Gui from '~/components/Gui'
 
 export default {
   components: {
-    GlslCanvas,
     Gui,
   },
 }

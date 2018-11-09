@@ -38,14 +38,6 @@ export default {
     return {
       scene: scene,
       parameters: parameters,
-      /*
-      camera: camera,
-      plane: plane,
-      uniforms: uniforms,
-      width: width,
-      height: height,
-      aspect: aspect,
-      */
     }
   },
   created () {
@@ -109,8 +101,6 @@ export default {
 
       this.renderer.setSize(this.width, this.height)
       this.camera.aspect = this.aspect
-
-      // this.uniforms.resolution.value = new THREE.Vector2(this.width, this.height)
     }
 
     this.fps = 1000.0 / 30.0

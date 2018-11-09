@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="container">
     <div class="canvasContainer">
       <GlslCanvas class="canvas" />
     </div>
-    <nav>
+    <nav :class="{ 'isColorInverted' : (isColorInverted === true) }">
       <ul>
         <nuxt-link exact to="/" ><li>Top</li></nuxt-link>
-        <nuxt-link to="/wallpaper" ><li>Wallpaper</li></nuxt-link>
+        <nuxt-link to="/wallpaper" ><li>Wallpapers</li></nuxt-link>
         <nuxt-link to="/settings" ><li>Settings</li></nuxt-link>
       </ul>
     </nav>
@@ -18,7 +18,10 @@ import GlslCanvas from './GlslCanvas'
 export default {
   components: {
     GlslCanvas,
-  }
+  },
+  computed: {
+    isColorInverted () { return this.$store.state.parameters.invertColor.isColorInverted.isColorInverted }
+  },
 }
 </script>
 
@@ -66,5 +69,16 @@ canvasContainer {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+nav.isColorInverted {
+  ul {
+    .nuxt-link-exact-active {
+      border-bottom-color: #eee,
+    }
+    a {
+      color: #eee,
+    }
+  }
+  border-bottom-color: #eee,
 }
 </style>

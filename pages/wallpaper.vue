@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{'isColorInverted': isColorInverted}">
     <nuxt-child :key="$route.params.name" />
   </div>
 </template>
@@ -10,6 +10,9 @@ export default {
     return {
       wallpapers: env.wallpapers,
     }
+  },
+  computed: {
+    isColorInverted () { return this.$store.state.parameters.invertColor.isColorInverted.isColorInverted }
   },
 }
 </script>

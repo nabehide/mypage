@@ -4,39 +4,51 @@
       <p>nabehide / Engineer</p>
       <p>Tokyo, Japan</p>
       <p>Love: Programming, Music</p>
+
+      <table>
+        <tr>
+          <td> <a href="https://github.com/nabehide" target="_blank" class="icon"><i class="fab fa-github" aria-hidden=true></i></a> </td>
+          <td> <a href="https://github.com/nabehide" target="_blank">Github</a> </td>
+        </tr>
+
+        <tr>
+          <td> <a href="https://twitter.com/____nabehide" target="_blank" class="icon"><i class="fab fa-twitter"></i></a> </td>
+          <td> <a href="https://twitter.com/____nabehide" target="_blank">Twitter</a> </td>
+        </tr>
+
+        <tr>
+          <td> <a href="https://soundcloud.com/nabehide" target="_blank" class="icon"><i class="fab fa-soundcloud"></i></a> </td>
+          <td> <a href="https://soundcloud.com/nabehide" target="_blank">Soundcloud</a> </td>
+        </tr>
+        <tr>
+          <td> <a class="icon"></a> </td>
+          <td> <a href="https://www.shadertoy.com/user/nabehide" class="text" target="_blank">Shadertoy</a> </td>
+        </tr>
+      </table>
     </div>
-
-    <table>
-      <tr>
-        <td> <a href="https://github.com/nabehide" target="_blank" class="icon"><i class="fab fa-github" aria-hidden=true></i></a> </td>
-        <td> <a href="https://github.com/nabehide" target="_blank">Github</a> </td>
-      </tr>
-
-      <tr>
-        <td> <a href="https://twitter.com/____nabehide" target="_blank" class="icon"><i class="fab fa-twitter"></i></a> </td>
-        <td> <a href="https://twitter.com/____nabehide" target="_blank">Twitter</a> </td>
-      </tr>
-
-      <tr>
-        <td> <a href="https://soundcloud.com/nabehide" target="_blank" class="icon"><i class="fab fa-soundcloud"></i></a> </td>
-        <td> <a href="https://soundcloud.com/nabehide" target="_blank">Soundcloud</a> </td>
-      </tr>
-      <tr>
-        <td> <a class="icon"></a> </td>
-        <td> <a href="https://www.shadertoy.com/user/nabehide" class="text" target="_blank">Shadertoy</a> </td>
-      </tr>
-
-    </table>
   </div>
 </template>
 
 <style scoped lang="scss">
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 .intro {
-  margin: 30px 0px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  p {
+    margin: 8px 0px;
+  }
 }
 table {
-  margin: auto;
-  list-style: none;
+  margin: 16px 0px;
   .icon {
     display: inline-block;
     width: 100%;

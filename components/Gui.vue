@@ -12,33 +12,26 @@ export default {
   },
   mounted () {
     const dat = require("dat.gui")
-    this.gui = new dat.GUI({})
+    this.gui = new dat.GUI({
+      closed: false,
+      closeOnTop: true,
+      autoPlace: false,
+    })
     this.gui.open()
 
     const guiContainer = document.getElementById("guiContainer")
     guiContainer.appendChild(this.gui.domElement)
 
-    this.params = this.$store.getters["parameters/state"]
-    this.parameters = JSON.parse(JSON.stringify(this.params))
+    this.state = this.$store.getters["parameters/state"]
+    this.parameters = JSON.parse(JSON.stringify(this.state))
 
-    /*
-    this.params = this.$store.getters["parameters/state"]
-    this.parameters = {
-      invertColor: {
-        isColorInverted: this.params.invertColor.isColorInverted,
-      },
-      glitch: {
-        isGlitched: this.params.glitch.isGlitched,
-        glitch: this.params.glitch.glitch,
-      },
-    }
-    */
-
-    for(let effect in this.params){
+    for(let effect in this.parameters){
       const folder = this.gui.addFolder(effect)
       folder.open()
-      for(let name in this.params[effect]){
-        folder.add(this.parameters[effect], name).listen().onChange(() => {
+      for(let name in this.parameters[effect]){
+        const { max, min, step } = this.parameters[effect][name]
+        // folder.add(this.parameters[effect], name).listen().onChange(() => {
+        folder.add(this.parameters[effect][name], name, min, max, step).listen().onChange(() => {
           this.setParameter(effect, name)
         })
       }
@@ -53,40 +46,40 @@ export default {
         case 'a':
           effect = 'invertColor'
           name = 'isColorInverted'
-          this.keyEvent(effect, name, !this.parameters[effect][name])
+          this.keyEvent(effect, name, !this.parameters[effect][name][name])
           break
 
         case 's':
           effect = 'glitch'
           name = 'isGlitched'
-          this.keyEvent(effect, name, !this.parameters[effect][name])
+          this.keyEvent(effect, name, !this.parameters[effect][name][name])
           break
         case 'w':
           effect = 'glitch'
           name = 'glitch'
-          this.keyEvent(effect, name, this.parameters[effect][name]+1)
+          this.keyEvent(effect, name, this.parameters[effect][name][name]+1)
           break
         case 'x':
           effect = 'glitch'
           name = 'glitch'
-          this.keyEvent(effect, name, this.parameters[effect][name]-1)
+          this.keyEvent(effect, name, this.parameters[effect][name][name]-1)
           break
 
         case 'e':
           effect = 'zoom'
           name = 'zoom'
-          this.keyEvent(effect, name, this.parameters[effect][name]+1)
+          this.keyEvent(effect, name, this.parameters[effect][name][name]+1)
           break
         case 'c':
           effect = 'zoom'
           name = 'zoom'
-          this.keyEvent(effect, name, this.parameters[effect][name]-1)
+          this.keyEvent(effect, name, this.parameters[effect][name][name]-1)
           break
 
         case 'f':
           effect = 'time'
           name = 'isStopped'
-          this.keyEvent(effect, name, !this.parameters[effect][name])
+          this.keyEvent(effect, name, !this.parameters[effect][name][name])
           break
 
         default:
@@ -94,13 +87,25 @@ export default {
           break
       }
     })
+
+    // MIDI
+    this.midiDevices = {
+      inputs: {},
+      outputs: {},
+    }
+    const requestMIDI = () => {
+      navigator["requestMIDIAccess"]()
+      .then(this.requestSuccess, this.requestError)
+    }
+    requestMIDI()
+    console.log("midiDevices", this.midiDevices)
   },
   methods: {
     setParameter (effect, name) {
-      this.$store.commit("parameters/set", {effect: effect, name: name, value: this.parameters[effect][name]})
+      this.$store.commit("parameters/set", {effect: effect, name: name, value: this.parameters[effect][name][name]})
     },
     keyEvent (effect, name, b) {
-      this.parameters[effect][name] = b
+      this.parameters[effect][name][name] = b
       this.setParameter(effect, name)
     },
     // keyEventCase (e, b) {
@@ -113,11 +118,34 @@ export default {
     //       break
     //   }
     // },
+
+    requestSuccess (data) {
+      const inputIterator = data.inputs.values()
+      for (let input=inputIterator.next(); !input.done; input=inputIterator.next()) {
+        const value = input.value
+        this.midiDevices.inputs[value.name] = value
+        value.addEventListener('midimessage', this.inputEvent, false)
+      }
+      const outputIterator = data.outpus.values()
+      for (let output=outputIterator.next(); !output.done; output=outputIterator.next()) {
+        const value = output.value
+        this.midiDevices.outputs[value.name] = value
+      }
+    },
+    requestError (error) {
+      console.log("MIDI error", error)
+    },
+    inputEvent (e) {
+      switch (e) {
+        default:
+        break
+      }
+    },
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 #guiWrapper {
   position: absolute;
   top: 0;
@@ -126,5 +154,15 @@ export default {
 #guiContainer {
   position: relative;
   z-index: 1;
+}
+
+#guiContainer *{
+  font-size: 20px;
+  color: red;
+}
+@media screen and (min-width:768px) {
+  #guiContainer *{
+    font-size: 10px;
+  }
 }
 </style>

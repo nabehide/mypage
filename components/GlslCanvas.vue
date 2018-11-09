@@ -66,17 +66,14 @@ export default {
     }
     this.uniforms = Object.assign(DEFAULT_UNIFORMS, this.uniforms)
 
-    this.uniforms = Object.assign({
-      isColorInverted: {type: 'i', value: this.parameters.invertColor.isColorInverted},
-
-      isGlitched: {type: 'i', value: this.parameters.glitch.isGlitched},
-      glitch: {type: 'i', value: this.parameters.glitch.glitch},
-
-      zoom: {type: 'f', value: this.parameters.zoom.zoom},
-
-      isStopped: {type: 'i', value: this.parameters.time.isStopped},
-
-    }, this.uniforms)
+    for (let effect in this.parameters) {
+      for (let name in this.parameters[effect]) {
+        const type = this.parameters[effect][name].type
+        const a = {}
+        a[name] = { type: type, value: this.parameters[effect][name][name] }
+        this.uniforms = Object.assign(a, this.uniforms)
+      }
+    }
 
     const fragmentShader = require('@/assets/glsl/' + 'curves' + '/source.frag')
 
@@ -105,6 +102,17 @@ export default {
     this.scene.add(this.camera)
     this.scene.add(this.plane)
 
+    window.onresize = () => {
+      this.width = window.innerWidth
+      this.height = window.innerHeight
+      this.aspect = this.width / this.height
+
+      this.renderer.setSize(this.width, this.height)
+      this.camera.aspect = this.aspect
+
+      // this.uniforms.resolution.value = new THREE.Vector2(this.width, this.height)
+    }
+
     this.fps = 1000.0 / 30.0
     this.past = this.getTime()
     this.animate()
@@ -123,13 +131,14 @@ export default {
       }
     },
     updateUniforms () {
-      if(!this.parameters.time.isStopped) {
-        this.uniforms.time.value += (this.now - this.past)*0.001;
+      if(!this.parameters.time.isStopped.isStopped) {
+        // this.uniforms.time.value += (this.now - this.past)*0.001 * 0.5
+        this.uniforms.time.value += (this.now - this.past)*0.001 * Number(this.parameters.time.speed.speed)
       }
 
       for (let p in this.parameters) {
         for (let name in this.parameters[p]) {
-          this.uniforms[name].value = this.parameters[p][name]
+          this.uniforms[name].value = this.parameters[p][name][name]
         }
       }
     },
@@ -137,7 +146,6 @@ export default {
     getTime () {
       const now = window.performance && ( performance.now )
       return (now && now.call( performance )) && ( new Date().getTime() )
-      // return new Date().getTime()
     },
   },
   updated () {
@@ -148,7 +156,7 @@ export default {
 <style scoped lang="scss">
 .container {
 }
-canvas {
+#canvas {
 }
 /*
 .container {

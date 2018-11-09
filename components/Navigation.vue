@@ -1,20 +1,35 @@
 <template>
-  <nav>
-    <ul>
-      <nuxt-link exact to="/" ><li>Top</li></nuxt-link>
-      <nuxt-link to="/wallpaper" ><li>Wallpaper</li></nuxt-link>
-      <nuxt-link to="/demo" ><li>Demo</li></nuxt-link>
-    </ul>
-  </nav>
+  <div>
+    <div class="canvasContainer">
+      <GlslCanvas class="canvas" />
+    </div>
+    <nav>
+      <ul>
+        <nuxt-link exact to="/" ><li>Top</li></nuxt-link>
+        <nuxt-link to="/wallpaper" ><li>Wallpaper</li></nuxt-link>
+        <nuxt-link to="/settings" ><li>Settings</li></nuxt-link>
+      </ul>
+    </nav>
+  </div>
 </template>
 
 <script>
+import GlslCanvas from './GlslCanvas'
 export default {
+  components: {
+    GlslCanvas,
+  }
 }
 </script>
 
 <style scoped lang="scss">
 nav {
+  z-index: 100;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
   ul {
     list-style: none;
     margin: 5px 0px;
@@ -37,5 +52,19 @@ nav {
     style: solid;
     width: thin;
   }
+}
+canvasContainer {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.canvas {
+  z-index: -100;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

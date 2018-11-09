@@ -120,7 +120,7 @@ void main(void){
 
   // invert color
   // if(d1 == 1){
-  if(isColorInverted == 1){
+  if(isColorInverted == 0){
     draw = 1.0 - draw;
   }
 
